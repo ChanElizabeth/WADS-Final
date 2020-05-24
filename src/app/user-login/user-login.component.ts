@@ -28,9 +28,11 @@ export class UserLoginComponent implements OnInit {
     this.Login.login(this.Userform).subscribe(
       data => {
         if(data.success){
+          // console.log(data)
           this.handleResponse()
         }
         else{
+          this.auth.setLoggedIn(false);
           error => this.handleError(error)
         }
       } 
@@ -45,7 +47,11 @@ export class UserLoginComponent implements OnInit {
     //   this.route.navigate(['/home']);
     // }
     this.auth.setLoggedIn(true);
-    this.route.navigateByUrl('/home');
+    let url =  this.auth.getRedirectUrl(); 
+			 console.log('Redirect Url:'+ url);
+			 this.route.navigate([ url ]);			
+    // this.auth.setLoggedIn(true);
+    // this.route.navigateByUrl('/home');
         // this.Token.handle(data);
   }
 
